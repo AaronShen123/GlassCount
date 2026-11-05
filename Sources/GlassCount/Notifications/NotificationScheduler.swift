@@ -128,10 +128,19 @@ struct SystemNotificationClient: NotificationClient {
         content.body = reminder.body
         content.sound = .default
         content.userInfo = ["eventID": reminder.eventID.uuidString, "offset": reminder.offset.rawValue]
-        let comps = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute, .second], from: reminder.fireDate)
-        let trigger = UNCalendarNotificationTrigger(dateMatching: comps, repeats: false)
+        let trigger = Self.trigger(for: reminder.fireDate)
         // Same identifier replaces any existing request, so this can never duplicate.
         try await center.add(UNNotificationRequest(identifier: reminder.id, content: content, trigger: trigger))
+    }
+
+    /// Reminder dates are absolute instants, including while the app is quit during travel.
+    static func trigger(for date: Date) -> UNCalendarNotificationTrigger {
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.timeZone = TimeZone(secondsFromGMT: 0)!
+        var components = calendar.dateComponents([.year, .month, .day, .hour, .minute, .second], from: date)
+        components.calendar = calendar
+        components.timeZone = calendar.timeZone
+        return UNCalendarNotificationTrigger(dateMatching: components, repeats: false)
     }
 
     func remove(ids: [String]) async {
