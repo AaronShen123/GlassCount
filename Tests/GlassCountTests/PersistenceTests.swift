@@ -169,12 +169,19 @@ struct WidgetSizeTests {
         #expect(WidgetPreset.nearest(to: CGSize(width: 500, height: 500)) == .large)
         #expect(WidgetPreset.nearest(to: CGSize(width: 1, height: 1)) == .small)
     }
+    @Test func freeSizeIsClampedAndSnapped() {
+        #expect(WidgetSize.clampWidth(10) == 160 && WidgetSize.clampWidth(9999) == 420 && WidgetSize.clampWidth(233) == 230)
+        #expect(WidgetSize.clampHeight(10) == 110 && WidgetSize.clampHeight(9999) == 300)
+        for p in WidgetPreset.allCases {
+            #expect(WidgetSize.widthRange.contains(p.size.width) && WidgetSize.heightRange.contains(p.size.height))
+        }
+    }
     @Test func settingsRoundTripAndOldFiles() throws {
-        var s = AppSettings(); s.widgetPreset = .large; s.widgetOrigin = [120, 340]
+        var s = AppSettings(); s.widgetWidth = 300; s.widgetHeight = 200; s.widgetOrigin = [120, 340]
         let back = try JSONDecoder().decode(AppSettings.self, from: JSONEncoder().encode(s))
-        #expect(back.widgetPreset == .large && back.widgetOrigin == [120, 340])
+        #expect(back.widgetWidth == 300 && back.widgetHeight == 200 && back.widgetOrigin == [120, 340])
         let old = try JSONDecoder().decode(AppSettings.self, from: Data("{}".utf8))
-        #expect(old.widgetPreset == .small && old.widgetOrigin == nil)
+        #expect(old.widgetWidth == 170 && old.widgetHeight == 160 && old.widgetOrigin == nil)
     }
     @Test func placementSnapsToGridAndStaysOnScreen() {
         let vis = CGRect(x: 0, y: 80, width: 1440, height: 800)           // e.g. Dock at bottom, menu bar excluded

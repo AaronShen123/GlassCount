@@ -114,7 +114,8 @@ struct AppSettings: Codable, Equatable, Sendable {
     var showMinutes = true
     var showSeconds = true
     /// Desktop widget: one of the fixed sizes, and where it was last placed (window origin, screen coords).
-    var widgetPreset: WidgetPreset = .small
+    var widgetWidth = WidgetSize.defaultWidth
+    var widgetHeight = WidgetSize.defaultHeight
     var widgetOrigin: [Double]?
 
     init() {}
@@ -129,7 +130,8 @@ struct AppSettings: Codable, Equatable, Sendable {
         showDesktopWidget = try c.decodeIfPresent(Bool.self, forKey: .showDesktopWidget) ?? false
         showMinutes = try c.decodeIfPresent(Bool.self, forKey: .showMinutes) ?? true
         showSeconds = try c.decodeIfPresent(Bool.self, forKey: .showSeconds) ?? true
-        widgetPreset = (try? c.decodeIfPresent(WidgetPreset.self, forKey: .widgetPreset)) ?? .small
+        widgetWidth = WidgetSize.clampWidth(try c.decodeIfPresent(Double.self, forKey: .widgetWidth) ?? WidgetSize.defaultWidth)
+        widgetHeight = WidgetSize.clampHeight(try c.decodeIfPresent(Double.self, forKey: .widgetHeight) ?? WidgetSize.defaultHeight)
         widgetOrigin = try c.decodeIfPresent([Double].self, forKey: .widgetOrigin).flatMap { $0.count == 2 ? $0 : nil }
     }
 }
@@ -149,15 +151,24 @@ extension AppSettings {
     var detail: CountdownDetail { CountdownDetail(showMinutes: showMinutes, showSeconds: showSeconds) }
 }
 
-/// Fixed desktop-widget sizes (card size in points), like system widgets.
+/// Free-resize limits for the desktop widget (card size in points). The size snaps to a 10 pt step.
+enum WidgetSize {
+    static let defaultWidth = 170.0, defaultHeight = 160.0
+    static let widthRange = 160.0...420.0, heightRange = 110.0...300.0
+    static let step = 10.0
+    static func clampWidth(_ v: Double) -> Double { ((v / step).rounded() * step).clamped(to: widthRange) }
+    static func clampHeight(_ v: Double) -> Double { ((v / step).rounded() * step).clamped(to: heightRange) }
+}
+
+/// Quick-pick sizes (context menu), like system widgets.
 enum WidgetPreset: String, Codable, CaseIterable, Sendable {
     case small, medium, large
     var title: String { rawValue.capitalized }
     var size: CGSize {
         switch self {
-        case .small: return CGSize(width: 160, height: 160)
+        case .small: return CGSize(width: 170, height: 160)
         case .medium: return CGSize(width: 340, height: 160)
-        case .large: return CGSize(width: 340, height: 340)
+        case .large: return CGSize(width: 340, height: 300)
         }
     }
     /// The preset whose size is closest to a freely dragged size (used to snap while resizing).

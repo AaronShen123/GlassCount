@@ -64,24 +64,28 @@ final class WidgetWindowController {
         return out
     }
 
-    /// Resizes keeping the top-left corner fixed, then re-applies the placement rules.
-    func setPreset(_ p: WidgetPreset, animated: Bool) {
+    /// Resizes keeping the top-left corner fixed. Never grows past the visible screen area.
+    func setSize(_ size: CGSize, animated: Bool, place: Bool = true) {
         guard let w = window else { return }
         let inset = DesktopWidgetView.inset
-        let content = NSRect(x: 0, y: 0, width: p.size.width + 2 * inset, height: p.size.height + 2 * inset)
-        let size = w.frameRect(forContentRect: content).size
+        let content = NSRect(x: 0, y: 0, width: size.width + 2 * inset, height: size.height + 2 * inset)
+        var frame = w.frameRect(forContentRect: content)
         let top = w.frame.maxY
+        if let vis = (w.screen ?? NSScreen.main)?.visibleFrame {
+            frame.size.width = min(frame.width, max(vis.maxX - WidgetPlacement.margin - w.frame.minX, 1))
+            frame.size.height = min(frame.height, max(top - vis.minY - WidgetPlacement.margin, 1))
+        }
         snapping = true
-        w.setFrame(NSRect(x: w.frame.minX, y: top - size.height, width: size.width, height: size.height), display: true, animate: animated)
+        w.setFrame(NSRect(x: w.frame.minX, y: top - frame.height, width: frame.width, height: frame.height), display: true, animate: animated)
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) { [weak self] in self?.snapping = false }
-        snapToPlacement(animated: animated)
+        if place { snapToPlacement(animated: animated) }
     }
 
     /// First placement: restore the saved origin if it is still on a screen, else the top-right corner.
-    func restore(origin: [Double]?, preset: WidgetPreset) {
+    func restore(origin: [Double]?, size card: CGSize) {
         guard let w = window else { return }
         let inset = DesktopWidgetView.inset
-        let size = NSSize(width: preset.size.width + 2 * inset, height: preset.size.height + 2 * inset)
+        let size = NSSize(width: card.width + 2 * inset, height: card.height + 2 * inset)
         var o = CGPoint.zero
         if let origin, origin.count == 2, NSScreen.screens.contains(where: { $0.visibleFrame.contains(CGPoint(x: origin[0] + 20, y: origin[1] + 20)) }) {
             o = CGPoint(x: origin[0], y: origin[1])
@@ -102,11 +106,12 @@ struct DesktopWidgetView: View {
     @Environment(AppModel.self) private var model
     @Environment(\.dismissWindow) private var dismissWindow
     @State private var hovering = false
+    /// After a resize the handle stays hidden until the pointer leaves and re-enters the widget.
+    @State private var handleHidden = false
     @State private var controller = WidgetWindowController()
     @State private var dragStart: (mouse: NSPoint, size: CGSize)?
-    @State private var previewPreset: WidgetPreset?
 
-    private var preset: WidgetPreset { previewPreset ?? model.store.settings.widgetPreset }
+    private var storedSize: CGSize { CGSize(width: model.store.settings.widgetWidth, height: model.store.settings.widgetHeight) }
 
     var body: some View {
         GeometryReader { geo in
@@ -118,10 +123,10 @@ struct DesktopWidgetView: View {
             controller.onPlaced = { origin in
                 model.store.updateSettings { $0.widgetOrigin = [Double(origin.x), Double(origin.y)] }
             }
-            controller.restore(origin: model.store.settings.widgetOrigin, preset: model.store.settings.widgetPreset)
+            controller.restore(origin: model.store.settings.widgetOrigin, size: storedSize)
         })
-        .onChange(of: model.store.settings.widgetPreset) { _, new in
-            if dragStart == nil { controller.setPreset(new, animated: true) }
+        .onChange(of: storedSize) { _, new in
+            if dragStart == nil { controller.setSize(new, animated: true) }
         }
     }
 
@@ -129,9 +134,9 @@ struct DesktopWidgetView: View {
 
     @ViewBuilder
     private func card(size: CGSize) -> some View {
-        let scale = (min(size.width, size.height) / 160).clamped(to: 0.8...2.0)
-        let showDate = size.width >= 300
-        let showProgress = size.height >= 300
+        let scale = min(size.width / 170, size.height / 130).clamped(to: 0.8...1.9)
+        let showDate = size.width >= 250 && size.height >= 150
+        let showProgress = size.height >= 230
         Group {
             if let e = model.store.featuredEvent {
                 LiveCountdown(target: e.targetDate, showsSeconds: false) { b, now in
@@ -182,44 +187,48 @@ struct DesktopWidgetView: View {
         }
         .overlay(alignment: .bottomTrailing) { resizeHandle }
         .contextMenu {
-            Picker("Size", selection: Binding(get: { model.store.settings.widgetPreset },
-                                              set: { v in model.store.updateSettings { $0.widgetPreset = v } })) {
-                ForEach(WidgetPreset.allCases, id: \.self) { Text($0.title).tag($0) }
+            Menu("Size") {
+                ForEach(WidgetPreset.allCases, id: \.self) { p in
+                    Button(p.title) {
+                        model.store.updateSettings { $0.widgetWidth = WidgetSize.clampWidth(p.size.width); $0.widgetHeight = WidgetSize.clampHeight(p.size.height) }
+                    }
+                }
             }
             Button("Close Widget") { model.store.updateSettings { $0.showDesktopWidget = false }; dismissWindow(id: "widget") }
         }
-        .onHover { hovering = $0 }
+        .onHover { inside in
+            hovering = inside
+            if !inside { handleHidden = false }
+        }
     }
 
-    // MARK: Resize handle: snaps to the nearest fixed size
+    // MARK: Resize handle: free drag within the size limits
 
     private var resizeHandle: some View {
         Image(systemName: "arrow.down.right.and.arrow.up.left")
             .rotationEffect(.degrees(90))
             .font(.caption2.weight(.bold)).foregroundStyle(.secondary)
             .padding(10).contentShape(Rectangle())
-            .opacity(hovering || dragStart != nil ? 1 : 0)
-            .help("Drag to change size (Small / Medium / Large)").accessibilityLabel("Resize desktop widget")
+            .opacity(dragStart != nil || (hovering && !handleHidden) ? 1 : 0)
+            .animation(.easeOut(duration: 0.15), value: hovering || dragStart != nil)
+            .help("Drag to resize").accessibilityLabel("Resize desktop widget")
             .highPriorityGesture(
                 DragGesture(minimumDistance: 1, coordinateSpace: .global)
                     .onChanged { _ in
-                        guard let w = controller.window else { return }
-                        if dragStart == nil {
-                            dragStart = (NSEvent.mouseLocation, model.store.settings.widgetPreset.size)
-                            _ = w
-                        }
+                        if dragStart == nil { dragStart = (NSEvent.mouseLocation, storedSize) }
                         guard let d = dragStart else { return }
-                        let m = NSEvent.mouseLocation
-                        let free = CGSize(width: d.size.width + (m.x - d.mouse.x), height: d.size.height - (m.y - d.mouse.y))
-                        let target = WidgetPreset.nearest(to: free)
-                        if target != previewPreset {
-                            previewPreset = target
-                            controller.setPreset(target, animated: true)   // live snap preview
-                        }
+                        let m = NSEvent.mouseLocation   // screen coordinates: unaffected by the window resizing under the cursor
+                        let w = WidgetSize.clampWidth(d.size.width + (m.x - d.mouse.x))
+                        let h = WidgetSize.clampHeight(d.size.height - (m.y - d.mouse.y))
+                        controller.setSize(CGSize(width: w, height: h), animated: false, place: false)
                     }
                     .onEnded { _ in
-                        if let p = previewPreset { model.store.updateSettings { $0.widgetPreset = p } }
-                        previewPreset = nil; dragStart = nil
+                        defer { dragStart = nil; handleHidden = true }
+                        guard let win = controller.window else { return }
+                        let cs = win.contentRect(forFrameRect: win.frame).size
+                        let w = WidgetSize.clampWidth(cs.width - 2 * Self.inset), h = WidgetSize.clampHeight(cs.height - 2 * Self.inset)
+                        model.store.updateSettings { $0.widgetWidth = w; $0.widgetHeight = h }
+                        controller.snapToPlacement(animated: true)     // grid + screen bounds + no overlap
                     })
     }
 }
