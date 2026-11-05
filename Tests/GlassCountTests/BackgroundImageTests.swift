@@ -146,3 +146,47 @@ struct BackgroundImageTests {
         #expect(cache.cached(fileName: name, maxPixel: 500) != nil)
     }
 }
+
+@Suite("Draft image ownership")
+struct ImageSessionTests {
+    @Test func sessionsProtectTheirOwnImportsUntilReleased() {
+        var sessions = ImageImportSessions()
+        let a = UUID(), b = UUID()
+        sessions.begin(a); sessions.begin(b)
+        #expect(sessions.retain("a.jpg", for: a))
+        #expect(sessions.retain("b.jpg", for: b))
+        sessions.begin(a) // appearing again must not discard ownership
+        #expect(sessions.protectedFileNames == ["a.jpg", "b.jpg"])
+        sessions.end(a)
+        #expect(sessions.protectedFileNames == ["b.jpg"])
+        #expect(!sessions.retain("late.jpg", for: a))
+        sessions.end(a) // dismissal after explicit save/cancel is harmless
+        sessions.end(b)
+        #expect(sessions.protectedFileNames.isEmpty)
+    }
+
+    @Test func inFlightImportsBlockCleanupUntilAllFinish() {
+        var sessions = ImageImportSessions()
+        sessions.beginImport(); sessions.beginImport()
+        #expect(sessions.inFlight == 2)
+        sessions.endImport()
+        #expect(sessions.inFlight == 1)
+        sessions.endImport()
+        #expect(sessions.inFlight == 0)
+    }
+
+    @MainActor @Test func draftImportSurvivesCleanupAndCancelRemovesIt() async throws {
+        let root = makeTempDir()
+        let source = root.appendingPathComponent("source.png")
+        #expect(writeImage(to: source, type: .png, width: 120, height: 80))
+        var options = LaunchOptions(); options.dataDirectory = root
+        let model = AppModel(options: options, notificationClient: FakeNotificationClient(status: .authorized))
+        let session = UUID(); model.beginImageSession(session)
+        let name = try #require(await model.importImage(source, for: session))
+        model.cleanupImages()
+        #expect(model.backgrounds.url(for: name) != nil)
+        model.endImageSession(session)
+        #expect(model.backgrounds.url(for: name) == nil)
+        #expect(FileManager.default.fileExists(atPath: source.path))
+    }
+}

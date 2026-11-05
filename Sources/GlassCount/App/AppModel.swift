@@ -29,6 +29,7 @@ final class AppModel {
 
     @ObservationIgnored private var syncTask: Task<Void, Never>?
     @ObservationIgnored private var started = false
+    @ObservationIgnored private var imageImports = ImageImportSessions()
     @ObservationIgnored private let options: LaunchOptions
 
     init(options: LaunchOptions = LaunchOptions(),
@@ -108,8 +109,30 @@ final class AppModel {
         catch { message = error.localizedDescription; return nil }
     }
 
+    func beginImageSession(_ id: UUID) { imageImports.begin(id) }
+
+    func endImageSession(_ id: UUID) {
+        imageImports.end(id)
+        cleanupImages()
+    }
+
+    func importImage(_ url: URL, for session: UUID) async -> String? {
+        guard imageImports.contains(session) else { return nil }
+        imageImports.beginImport()
+        defer { imageImports.endImport(); cleanupImages() }
+        guard let name = await importImage(url) else { return nil }
+        guard imageImports.retain(name, for: session) else {
+            // The editor was dismissed while decoding. Do not attach a late result.
+            backgrounds.remove(fileName: name)
+            return nil
+        }
+        return name
+    }
+
     @discardableResult
     func importAsGlobalBackground(_ url: URL) async -> Bool {
+        imageImports.beginImport()
+        defer { imageImports.endImport(); cleanupImages() }
         guard let name = await importImage(url) else { return false }
         let old = store.settings.background.imageFileName
         store.updateSettings { $0.background.imageFileName = name }
@@ -130,7 +153,10 @@ final class AppModel {
 
     /// Deletes app-owned image copies nothing references any more.
     func cleanupImages(protecting extra: Set<String> = []) {
-        backgrounds.removeUnreferenced(keeping: store.referencedImageFileNames.union(extra))
+        // A decoder may have written its output before its MainActor continuation records ownership.
+        guard imageImports.inFlight == 0 else { return }
+        backgrounds.removeUnreferenced(keeping: store.referencedImageFileNames
+            .union(imageImports.protectedFileNames).union(extra))
     }
 
     // MARK: Demo data
