@@ -1,6 +1,7 @@
 import AppKit
 import Observation
 import UserNotifications
+import WidgetKit
 
 enum EditorTarget: Identifiable, Equatable {
     case new
@@ -57,6 +58,13 @@ final class AppModel {
         clock.start()
         NotificationCenter.default.addObserver(forName: NSApplication.willTerminateNotification, object: nil, queue: .main) { [weak self] _ in
             MainActor.assumeIsolated { self?.store.flushNow() }
+        }
+        NotificationCenter.default.addObserver(forName: .glassCountStateDidSave, object: nil, queue: .main) { [weak self] note in
+            MainActor.assumeIsolated {
+                guard let self, let url = note.object as? URL,
+                      url.standardizedFileURL == self.dataDirectory.appendingPathComponent("state.json").standardizedFileURL else { return }
+                WidgetCenter.shared.reloadTimelines(ofKind: "GlassCountWidget")
+            }
         }
         if let seed = options.seedBackground, store.settings.background.imageFileName == nil {
             Task { _ = await importAsGlobalBackground(seed) }

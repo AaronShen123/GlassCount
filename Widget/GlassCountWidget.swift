@@ -33,8 +33,9 @@ struct Provider: TimelineProvider {
     }
     func getTimeline(in context: Context, completion: @escaping (Timeline<CountdownEntry>) -> Void) {
         let event = WidgetData.load().event
-        // One entry per hour for 24 h; the seconds/minutes tick live via Text(.timer), so no per-minute reloads.
-        let entries = (0..<24).map { CountdownEntry(date: Date.now.addingTimeInterval(Double($0) * 3600), event: event) }
+        // Text(.timer) ticks live; an expiry entry also switches the surrounding view's branch.
+        let entries = CountdownEngine.refreshDates(from: .now, target: event?.targetDate)
+            .map { CountdownEntry(date: $0, event: event) }
         completion(Timeline(entries: entries, policy: .atEnd))
     }
 }

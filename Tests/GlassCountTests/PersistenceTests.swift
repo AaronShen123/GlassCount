@@ -2,6 +2,39 @@ import Testing
 import Foundation
 @testable import GlassCount
 
+private final class SaveNotificationCounter: @unchecked Sendable {
+    private let lock = NSLock()
+    private var count = 0
+    func increment() { lock.withLock { count += 1 } }
+    var value: Int { lock.withLock { count } }
+}
+
+@Suite("Persisted state notifications")
+struct PersistedNotificationTests {
+    @Test func notifiesOnlyAfterSuccessfulWrite() throws {
+        let root = makeTempDir()
+        let persistence = JSONFilePersistence(directory: root)
+        let counter = SaveNotificationCounter()
+        let token = NotificationCenter.default.addObserver(forName: .glassCountStateDidSave, object: nil, queue: nil) { note in
+            guard let url = note.object as? URL, url == persistence.fileURL else { return }
+            if (try? JSONFilePersistence(directory: root).load()) != nil { counter.increment() }
+        }
+        defer { NotificationCenter.default.removeObserver(token) }
+        try persistence.save(PersistedState())
+        #expect(counter.value == 1)
+        let file = root.appendingPathComponent("blocked")
+        try Data("file".utf8).write(to: file)
+        let blocked = JSONFilePersistence(directory: file)
+        let failedCounter = SaveNotificationCounter()
+        let failedToken = NotificationCenter.default.addObserver(forName: .glassCountStateDidSave, object: nil, queue: nil) { note in
+            if let url = note.object as? URL, url == blocked.fileURL { failedCounter.increment() }
+        }
+        defer { NotificationCenter.default.removeObserver(failedToken) }
+        #expect(throws: (any Error).self) { try blocked.save(PersistedState()) }
+        #expect(failedCounter.value == 0)
+    }
+}
+
 @MainActor
 @Suite("Persistence & store")
 struct PersistenceTests {

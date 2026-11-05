@@ -232,3 +232,25 @@ struct DetailTests {
         #expect(!back.showMinutes && !back.showSeconds && back.detail == CountdownDetail(showMinutes: false, showSeconds: false))
     }
 }
+
+@Suite("Widget transition dates")
+struct WidgetTransitionTests {
+    @Test func includesExpiryBetweenHourlyEntries() {
+        let now = Date(timeIntervalSince1970: 1_800_000_000)
+        let target = now.addingTimeInterval(10)
+        let dates = CountdownEngine.refreshDates(from: now, target: target)
+        #expect(dates.first == now)
+        #expect(dates.contains(target))
+        #expect(dates.count == 25)
+        #expect(zip(dates, dates.dropFirst()).allSatisfy { $0 < $1 })
+    }
+
+    @Test func hourlyExpiredAndAbsentTargetsDoNotDuplicateEntries() {
+        let now = Date(timeIntervalSince1970: 1_800_000_000)
+        for target in [nil, now, now.addingTimeInterval(-10), now.addingTimeInterval(3600), now.addingTimeInterval(24 * 3600)] {
+            let dates = CountdownEngine.refreshDates(from: now, target: target)
+            #expect(dates.count == 24)
+            #expect(Set(dates).count == dates.count)
+        }
+    }
+}
