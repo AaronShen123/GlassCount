@@ -65,8 +65,10 @@ actor PersistenceWriter {
     private let persistence: StatePersistence
     private(set) var lastError: String?
     init(_ p: StatePersistence) { persistence = p }
-    func write(_ state: PersistedState) {
+    @discardableResult
+    func write(_ state: PersistedState) -> String? {
         do { try persistence.save(state); lastError = nil } catch { lastError = error.localizedDescription }
+        return lastError
     }
 }
 

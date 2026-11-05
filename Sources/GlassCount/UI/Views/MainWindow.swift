@@ -54,6 +54,16 @@ struct MainWindow: View {
         ScrollView {
             VStack(alignment: .leading, spacing: 24) {
                 HeaderBar()
+                if let error = store.saveErrorMessage {
+                    HStack {
+                        Label(error, systemImage: "exclamationmark.triangle")
+                        Spacer()
+                        Button("Retry") { store.retrySave() }
+                    }
+                    .padding(12)
+                    .background(.red.opacity(0.12), in: RoundedRectangle(cornerRadius: 12))
+                    .accessibilityIdentifier("saveErrorBanner")
+                }
                 if store.events.isEmpty {
                     EmptyStateView()
                 } else {

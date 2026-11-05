@@ -213,3 +213,44 @@ struct WidgetSizeTests {
         #expect(WidgetPlacement.resolve(card: want, in: vis, avoiding: [vis]) == WidgetPlacement.snap(card: want, in: vis))
     }
 }
+
+private final class RecoveringSavePersistence: StatePersistence, @unchecked Sendable {
+    private let lock = NSLock()
+    private var failing = true
+    func load() throws -> PersistedState? { nil }
+    func quarantine() throws {}
+    func save(_ state: PersistedState) throws {
+        if lock.withLock({ failing }) {
+            throw NSError(domain: "SaveFeedbackTests", code: 1,
+                          userInfo: [NSLocalizedDescriptionKey: "Simulated write failure"])
+        }
+    }
+    func recover() { lock.withLock { failing = false } }
+}
+
+@MainActor @Suite("Save failure feedback")
+struct SaveFeedbackTests {
+    @Test func debouncedFailureIsVisibleAndRetryClearsIt() async throws {
+        let persistence = RecoveringSavePersistence()
+        let store = AppStore(persistence: persistence, saveDelay: .milliseconds(1))
+        store.add(CountdownEvent(title: "Unsaved", targetDate: Date().addingTimeInterval(3600)))
+        try await Task.sleep(for: .milliseconds(200))
+        #expect(store.saveErrorMessage?.contains("Simulated write failure") == true)
+        #expect(store.events.count == 1)
+        persistence.recover()
+        store.retrySave()
+        try await Task.sleep(for: .milliseconds(200))
+        #expect(store.saveErrorMessage == nil)
+    }
+
+    @Test func synchronousRetryClearsOnlySaveError() {
+        let persistence = RecoveringSavePersistence()
+        let store = AppStore(persistence: persistence)
+        store.flushNow()
+        #expect(store.saveErrorMessage != nil)
+        persistence.recover()
+        store.flushNow()
+        #expect(store.saveErrorMessage == nil)
+        #expect(store.statusMessage == nil)
+    }
+}
