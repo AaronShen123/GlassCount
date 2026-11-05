@@ -1,5 +1,6 @@
 import Testing
 import Foundation
+import UserNotifications
 @testable import GlassCount
 
 /// In-memory stand-in for UNUserNotificationCenter.
@@ -157,5 +158,24 @@ struct NotificationTests {
         let ok = AppModel(options: opts, notificationClient: FakeNotificationClient(status: .notDetermined, grantOnRequest: true))
         await ok.setRemindersEnabled(true)
         #expect(ok.store.settings.notifications.enabled)
+    }
+}
+
+@Suite("Absolute notification triggers")
+struct AbsoluteTriggerTests {
+    @Test func componentsPreserveInstantAcrossCalendarTimezones() {
+        let fire = date(2027, 6, 15, 9, tz: "America/New_York")
+        let trigger = SystemNotificationClient.trigger(for: fire)
+        #expect(!trigger.repeats)
+        #expect(trigger.dateComponents.timeZone?.secondsFromGMT(for: fire) == 0)
+        #expect(trigger.dateComponents.calendar?.identifier == .gregorian)
+        for zone in ["America/Los_Angeles", "Asia/Tokyo", "Europe/London"] {
+            #expect(calendar(zone).date(from: trigger.dateComponents) == fire)
+        }
+    }
+
+    @Test func nativeNextTriggerDateMatchesAbsoluteFutureInstant() {
+        let fire = Date(timeIntervalSince1970: Date().addingTimeInterval(7200).timeIntervalSince1970.rounded(.down))
+        #expect(SystemNotificationClient.trigger(for: fire).nextTriggerDate() == fire)
     }
 }
