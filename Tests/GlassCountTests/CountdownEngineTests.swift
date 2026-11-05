@@ -118,17 +118,41 @@ struct CountdownEngineTests {
         #expect(CountdownEngine.tickInterval(remaining: 0, showsSeconds: true) == nil)
     }
 
-    @Test func scheduleStopsAtTargetAndAlignsToBoundaries() {
+    @Test func scheduleContinuesPastTargetAndAlignsToBoundaries() {
         let start = Date(timeIntervalSinceReferenceDate: 1000.4)
         let target = start.addingTimeInterval(3.2).rounded()
-        let entries = Array(CountdownSchedule(target: target, showsSeconds: true).entries(from: start, mode: .normal))
+        let entries = Array(CountdownSchedule(target: target, showsSeconds: true).entries(from: start, mode: .normal).prefix(8))
         #expect(entries.first == start)
-        #expect(entries.last == target)
-        #expect(entries.dropFirst().dropLast().allSatisfy { $0.timeIntervalSinceReferenceDate.truncatingRemainder(dividingBy: 1) == 0 })
-        let expired = Array(CountdownSchedule(target: start.addingTimeInterval(-5), showsSeconds: true).entries(from: start, mode: .normal))
-        #expect(expired.count == 1)   // one render, no ticking
+        #expect(entries.contains(target))
+        #expect(entries.last! > target)
+        #expect(zip(entries, entries.dropFirst()).allSatisfy { $0 < $1 })
+        #expect(entries.dropFirst().allSatisfy { $0.timeIntervalSinceReferenceDate.truncatingRemainder(dividingBy: 1) == 0 })
         let minute = Array(CountdownSchedule(target: start.addingTimeInterval(400), showsSeconds: false).entries(from: start, mode: .normal).prefix(4))
         #expect(minute[1].timeIntervalSinceReferenceDate.truncatingRemainder(dividingBy: 60) == 0)
+    }
+
+    @Test func expiredScheduleHonorsDisplayAndLowFrequencyCadence() {
+        let start = Date(timeIntervalSinceReferenceDate: 1000.4)
+        let target = start.addingTimeInterval(-5)
+        let seconds = Array(CountdownSchedule(target: target, showsSeconds: true).entries(from: start, mode: .normal).prefix(3))
+        #expect(seconds.first == start)
+        #expect(seconds.count == 3)
+        #expect(seconds[2].timeIntervalSince(seconds[1]) == 1)
+        for showsSeconds in [false, true] {
+            let mode: CountdownSchedule.Mode = showsSeconds ? .lowFrequency : .normal
+            let minutes = Array(CountdownSchedule(target: target, showsSeconds: showsSeconds).entries(from: start, mode: mode).prefix(3))
+            #expect(minutes.count == 3)
+            #expect(minutes[2].timeIntervalSince(minutes[1]) == 60)
+        }
+    }
+
+    @Test func fractionalTargetIsEmittedOnceBeforeElapsedTicks() {
+        let start = Date(timeIntervalSinceReferenceDate: 1000.2)
+        let target = Date(timeIntervalSinceReferenceDate: 1001.5)
+        let entries = Array(CountdownSchedule(target: target, showsSeconds: true).entries(from: start, mode: .normal).prefix(6))
+        #expect(entries.filter { $0 == target }.count == 1)
+        #expect(zip(entries, entries.dropFirst()).allSatisfy { $0 < $1 })
+        #expect(entries.last! > target)
     }
 }
 
