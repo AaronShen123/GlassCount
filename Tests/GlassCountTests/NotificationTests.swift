@@ -47,6 +47,22 @@ struct NotificationTests {
         #expect(plan == plan.sorted { $0.fireDate < $1.fireDate })
     }
 
+    @Test func oneDayReminderCopyMatchesFixedDurationAcrossDST() {
+        let ny = calendar("America/New_York")
+        let s = settings([.oneDay])
+        for (month, day) in [(3, 15), (11, 8)] {
+            let target = date(2027, month, day, tz: "America/New_York")
+            let e = CountdownEvent(title: "DST event", targetDate: target)
+            let plan = ReminderPlanner.plan(events: [e], settings: s, now: date(2027, 1, 1))
+            #expect(plan.count == 1)
+            #expect(target.timeIntervalSince(plan[0].fireDate) == 24 * 3600)
+            #expect(plan[0].body.hasPrefix("In 24 hours · "))
+            #expect(plan[0].body.contains(target.formatted(date: .abbreviated, time: .omitted)))
+            // A fixed duration intentionally differs from one local calendar day at DST.
+            #expect(plan[0].fireDate != ny.date(byAdding: .day, value: -1, to: target))
+        }
+    }
+
     @Test func pastRemindersAreSkipped() {
         let e = event(in: 2 * 3600)            // 2 h away: 7d and 1d are in the past
         let plan = ReminderPlanner.plan(events: [e], settings: settings(Set(ReminderOffset.allCases)), now: now)
