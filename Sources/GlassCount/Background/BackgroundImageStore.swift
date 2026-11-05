@@ -127,3 +127,20 @@ struct BackgroundImageStore: Sendable {
         return UUID(uuidString: String(parts[0])) != nil
     }
 }
+
+/// Tracks editor-owned images until their draft is saved or dismissed.
+struct ImageImportSessions {
+    private var sessions: [UUID: Set<String>] = [:]
+    private(set) var inFlight = 0
+    var protectedFileNames: Set<String> { sessions.values.reduce(into: Set<String>()) { $0.formUnion($1) } }
+    mutating func begin(_ id: UUID) { if sessions[id] == nil { sessions[id] = [] } }
+    mutating func end(_ id: UUID) { sessions[id] = nil }
+    func contains(_ id: UUID) -> Bool { sessions[id] != nil }
+    mutating func beginImport() { inFlight += 1 }
+    mutating func endImport() { inFlight -= 1 }
+    mutating func retain(_ name: String, for id: UUID) -> Bool {
+        guard sessions[id] != nil else { return false }
+        sessions[id]!.insert(name)
+        return true
+    }
+}

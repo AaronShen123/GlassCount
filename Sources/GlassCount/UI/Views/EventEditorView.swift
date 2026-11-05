@@ -6,10 +6,9 @@ struct EventEditorView: View {
     let target: EditorTarget
 
     @State private var draft = EventDraft()
-    @State private var originalImage: String?
+    @State private var imageSessionID = UUID()
     @State private var loaded = false
     @State private var showImporter = false
-    @State private var importedThisSession: Set<String> = []
 
     private var issues: [EventValidationIssue] { draft.validate() }
     private var editingID: UUID? { if case .edit(let id) = target { return id } else { return nil } }
@@ -101,12 +100,12 @@ struct EventEditorView: View {
             .padding(16)
         }
         .frame(width: 480, height: 640)
-        .onAppear(perform: load)
+        .onAppear { model.beginImageSession(imageSessionID); load() }
+        .onDisappear { model.endImageSession(imageSessionID) }
         .fileImporter(isPresented: $showImporter, allowedContentTypes: BackgroundImageStore.allowedTypes) { result in
             guard case .success(let url) = result else { return }
             Task {
-                if let name = await model.importImage(url) {
-                    importedThisSession.insert(name)
+                if let name = await model.importImage(url, for: imageSessionID) {
                     draft.backgroundImageFileName = name
                 }
             }
@@ -125,7 +124,6 @@ struct EventEditorView: View {
         loaded = true
         if let id = editingID, let e = model.store.event(id: id) {
             draft = EventDraft(event: e, isFeatured: model.store.featuredEvent?.id == id)
-            originalImage = e.backgroundImageFileName
         }
     }
 
@@ -138,13 +136,12 @@ struct EventEditorView: View {
         } else if let event = draft.makeEvent() {
             store.add(event, featured: draft.makeFeatured)
         }
-        model.cleanupImages()   // drops replaced/removed copies; the original photos are never touched
+        model.endImageSession(imageSessionID)   // saved references now protect the chosen image
         dismiss()
     }
 
     private func cancel() {
-        // Discard images imported during this session that were never saved.
-        for name in importedThisSession where name != originalImage { model.backgrounds.remove(fileName: name) }
+        model.endImageSession(imageSessionID)
         dismiss()
     }
 }
