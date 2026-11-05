@@ -1,13 +1,13 @@
 import SwiftUI
 
-/// Minute- or second-aligned schedule that stops after the target has passed.
+/// Minute- or second-aligned schedule for both remaining and elapsed time.
 struct CountdownSchedule: TimelineSchedule {
     let target: Date
     let showsSeconds: Bool
 
     func entries(from startDate: Date, mode: Mode) -> Entries {
         Entries(cursor: startDate, target: target, showsSeconds: showsSeconds && mode == .normal,
-                lowFrequency: mode == .lowFrequency, emittedFirst: false, finished: startDate >= target)
+                lowFrequency: mode == .lowFrequency, emittedFirst: false)
     }
 
     struct Entries: Sequence, IteratorProtocol {
@@ -16,19 +16,17 @@ struct CountdownSchedule: TimelineSchedule {
         let showsSeconds: Bool
         let lowFrequency: Bool
         var emittedFirst: Bool
-        var finished: Bool
 
         mutating func next() -> Date? {
             if !emittedFirst { emittedFirst = true; return cursor }   // render immediately
-            if finished { return nil }
             let remaining = target.timeIntervalSince(cursor)
-            guard var period = CountdownEngine.tickInterval(remaining: remaining, showsSeconds: showsSeconds) else {
-                finished = true; return nil
-            }
+            // Expired cards still display elapsed time, so they need ongoing refreshes.
+            var period = CountdownEngine.tickInterval(remaining: remaining, showsSeconds: showsSeconds)
+                ?? (showsSeconds ? 1 : 60)
             if lowFrequency && remaining > 120 { period = 60 }
             let t = cursor.timeIntervalSinceReferenceDate
             var next = Date(timeIntervalSinceReferenceDate: ((t + 0.001) / period).rounded(.up) * period)
-            if next >= target { next = target; finished = true }
+            if cursor < target && next >= target { next = target }
             cursor = next
             return next
         }
