@@ -39,7 +39,7 @@ enum ReminderPlanner {
         let when = target.formatted(date: .abbreviated, time: .omitted)
         switch offset {
         case .sevenDays: return "7 days to go · \(when)"
-        case .oneDay: return "Tomorrow · \(when)"
+        case .oneDay: return "In 24 hours · \(when)"
         case .oneHour: return "In 1 hour · \(when)"
         case .atEvent: return "It's time! · \(when)"
         }
