@@ -132,11 +132,15 @@ struct EventDraft: Equatable, Sendable {
         if trimmedTitle.isEmpty { issues.append(.emptyTitle) }
         if trimmedTitle.count > Self.maxTitleLength { issues.append(.titleTooLong) }
         if !(targetDate >= Self.minDate && targetDate <= Self.maxDate) { issues.append(.targetOutOfRange) }
-        if hasStartDate && startDate >= targetDate { issues.append(.startNotBeforeTarget) }
+        // Compare the date-only values that makeEvent() will persist. DatePicker can
+        // retain hidden time components even though the editor displays only dates.
+        if hasStartDate && Self.startOfDay(startDate) >= Self.startOfDay(targetDate) {
+            issues.append(.startNotBeforeTarget)
+        }
         return issues
     }
 
-    /// Builds an event, or nil when the draft is invalid. Seconds are normalised to :00.
+    /// Builds an event, or nil when the draft is invalid. Dates are normalised to local midnight.
     func makeEvent(id: UUID = UUID(), createdAt: Date = Date()) -> CountdownEvent? {
         guard validate().isEmpty else { return nil }
         return CountdownEvent(

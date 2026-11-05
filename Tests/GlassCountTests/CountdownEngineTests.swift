@@ -199,6 +199,39 @@ struct ValidationTests {
         d.targetDate = Date(timeIntervalSince1970: -10)
         #expect(d.validate().contains(.targetOutOfRange))
     }
+    @Test func rejectsSameDayProgressWithHiddenTimes() {
+        let cal = Calendar.autoupdatingCurrent
+        let day = cal.startOfDay(for: date(2027, 5, 2))
+        var d = EventDraft(now: day); d.title = "Same-day progress"
+        d.hasStartDate = true
+        d.startDate = cal.date(byAdding: .hour, value: 8, to: day)!
+        d.targetDate = cal.date(byAdding: .hour, value: 9, to: day)!
+
+        #expect(d.validate() == [.startNotBeforeTarget])
+        #expect(d.makeEvent() == nil)
+
+        // A disabled start date must not prevent creating an ordinary countdown.
+        d.hasStartDate = false
+        #expect(d.validate().isEmpty)
+        #expect(d.makeEvent()?.startDate == nil)
+    }
+
+    @Test func acceptsProgressAcrossAdjacentCalendarDays() {
+        let cal = Calendar.autoupdatingCurrent
+        let day = cal.startOfDay(for: date(2027, 5, 2))
+        let nextDay = cal.date(byAdding: .day, value: 1, to: day)!
+        var d = EventDraft(now: day); d.title = "Overnight progress"
+        d.hasStartDate = true
+        d.startDate = cal.date(byAdding: .hour, value: 23, to: day)!
+        d.targetDate = cal.date(byAdding: .hour, value: 1, to: nextDay)!
+
+        #expect(d.validate().isEmpty)
+        let event = d.makeEvent()
+        #expect(event?.startDate == day)
+        #expect(event?.targetDate == nextDay)
+        #expect(CountdownEngine.progress(start: event?.startDate, target: nextDay, now: day) == 0)
+    }
+
     @Test func allowsPastTargetAndNormalisesInput() {
         var d = EventDraft(now: date(2025, 1, 1)); d.title = "  Past  "
         d.targetDate = date(2020, 5, 5, 10, 30, 45)
