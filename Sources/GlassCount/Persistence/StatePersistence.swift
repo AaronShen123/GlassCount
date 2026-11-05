@@ -50,6 +50,7 @@ struct JSONFilePersistence: StatePersistence {
         try FileManager.default.createDirectory(at: fileURL.deletingLastPathComponent(), withIntermediateDirectories: true)
         let data = try Self.makeEncoder().encode(state)
         try data.write(to: fileURL, options: .atomic)
+        NotificationCenter.default.post(name: .glassCountStateDidSave, object: fileURL)
     }
 
     func quarantine() throws {
@@ -79,4 +80,8 @@ enum AppPaths {
     static func backgroundsDirectory(in root: URL) -> URL {
         root.appendingPathComponent("Backgrounds", isDirectory: true)
     }
+}
+
+extension Notification.Name {
+    static let glassCountStateDidSave = Notification.Name("GlassCount.stateDidSave")
 }

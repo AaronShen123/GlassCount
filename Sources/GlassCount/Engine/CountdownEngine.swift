@@ -48,6 +48,13 @@ enum CountdownEngine {
         return 60
     }
 
+    /// Hourly snapshots plus the exact expiry transition, without duplicate dates.
+    static func refreshDates(from now: Date, target: Date?) -> [Date] {
+        var dates = (0..<24).map { now.addingTimeInterval(Double($0) * 3600) }
+        if let target, target > now, target < dates.last! { dates.append(target) }
+        return Array(Set(dates)).sorted()
+    }
+
     private static func whole(_ d: Date) -> Date {
         Date(timeIntervalSinceReferenceDate: d.timeIntervalSinceReferenceDate.rounded(.down))
     }
