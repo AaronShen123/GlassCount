@@ -7,12 +7,14 @@ final class AppStore {
     private(set) var events: [CountdownEvent]
     private(set) var settings: AppSettings
     private(set) var statusMessage: String?
+    private(set) var saveErrorMessage: String?
 
     @ObservationIgnored var onChange: (() -> Void)?
     @ObservationIgnored private let persistence: StatePersistence
     @ObservationIgnored private let writer: PersistenceWriter
     @ObservationIgnored private var saveTask: Task<Void, Never>?
     @ObservationIgnored private let saveDelay: Duration
+    @ObservationIgnored private var saveRevision = 0
 
     init(persistence: StatePersistence, saveDelay: Duration = .milliseconds(300)) {
         self.persistence = persistence
@@ -152,7 +154,11 @@ final class AppStore {
         onChange?()
     }
 
+    func retrySave() { scheduleSave() }
+
     private func scheduleSave() {
+        saveRevision &+= 1
+        let revision = saveRevision
         saveTask?.cancel()
         let snapshot = snapshotState()
         let delay = saveDelay
@@ -160,7 +166,9 @@ final class AppStore {
         saveTask = Task {
             try? await Task.sleep(for: delay)
             guard !Task.isCancelled else { return }
-            await writer.write(snapshot)
+            let error = await writer.write(snapshot)
+            guard !Task.isCancelled, revision == saveRevision else { return }
+            saveErrorMessage = error.map { "Could not save: \($0)" }
         }
     }
 
@@ -173,8 +181,9 @@ final class AppStore {
 
     /// Synchronous save, used on app termination and by tests.
     func flushNow() {
+        saveRevision &+= 1
         saveTask?.cancel()
-        do { try persistence.save(snapshotState()) }
-        catch { statusMessage = "Could not save: \(error.localizedDescription)" }
+        do { try persistence.save(snapshotState()); saveErrorMessage = nil }
+        catch { saveErrorMessage = "Could not save: \(error.localizedDescription)" }
     }
 }
