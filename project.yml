@@ -1,0 +1,81 @@
+name: GlassCount
+options:
+  bundleIdPrefix: com.glasscount
+  deploymentTarget: { macOS: "15.0" }
+  createIntermediateGroups: true
+settings:
+  base:
+    SWIFT_VERSION: "5.0"
+    MACOSX_DEPLOYMENT_TARGET: "15.0"
+    CODE_SIGN_STYLE: Manual
+    CODE_SIGN_IDENTITY: "-"
+    DEVELOPMENT_TEAM: ""   # set your team in Xcode to sign for distribution / App Groups
+targets:
+  GlassCount:
+    type: application
+    platform: macOS
+    sources: [Sources/GlassCount, Resources/Assets.xcassets]
+    info:
+      path: build/Info-App.plist
+      properties:
+        CFBundleDisplayName: GlassCount
+        LSMinimumSystemVersion: "15.0"
+        LSApplicationCategoryType: public.app-category.utilities
+        NSPrincipalClass: NSApplication
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.glasscount.app
+        ENABLE_HARDENED_RUNTIME: NO
+        ENABLE_APP_SANDBOX: NO
+        GENERATE_INFOPLIST_FILE: NO
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+    dependencies:
+      - target: GlassCountWidget
+        embed: true
+  GlassCountWidget:
+    type: app-extension
+    platform: macOS
+    sources:
+      - Widget
+      - Sources/GlassCount/Models
+      - Sources/GlassCount/Engine/CountdownEngine.swift
+      - Sources/GlassCount/UI/Components/EventStyle.swift
+      - Sources/GlassCount/Persistence/StatePersistence.swift
+    info:
+      path: build/Info-Widget.plist
+      properties:
+        CFBundleDisplayName: GlassCount
+        NSExtension:
+          NSExtensionPointIdentifier: com.apple.widgetkit-extension
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.glasscount.app.widget
+        CODE_SIGN_ENTITLEMENTS: Widget/GlassCountWidget.entitlements
+        ENABLE_HARDENED_RUNTIME: NO
+        SKIP_INSTALL: YES
+  GlassCountTests:
+    type: bundle.unit-test
+    platform: macOS
+    sources: [Tests/GlassCountTests]
+    dependencies: [{ target: GlassCount }]
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.glasscount.app.tests
+        GENERATE_INFOPLIST_FILE: YES
+        TEST_HOST: "$(BUILT_PRODUCTS_DIR)/GlassCount.app/Contents/MacOS/GlassCount"
+        BUNDLE_LOADER: "$(TEST_HOST)"
+  GlassCountUITests:
+    type: bundle.ui-testing
+    platform: macOS
+    sources: [UITests]
+    dependencies: [{ target: GlassCount }]
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.glasscount.app.uitests
+        GENERATE_INFOPLIST_FILE: YES
+        TEST_TARGET_NAME: GlassCount
+schemes:
+  GlassCount:
+    build: { targets: { GlassCount: all, GlassCountWidget: all } }
+    test: { targets: [GlassCountTests, GlassCountUITests] }
+    run: { config: Debug }

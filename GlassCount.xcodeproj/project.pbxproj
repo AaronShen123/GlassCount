@@ -1,0 +1,887 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		013032ED1C9EA7D2C9539CD3 /* CountdownEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = D92175ACA7E03EB4C635D6CA /* CountdownEngine.swift */; };
+		0E4314BE2722101B740D3E7C /* MainWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = E65E4D68834E4187D7958E8C /* MainWindow.swift */; };
+		18C6EDB294E46AA1929EC691 /* EventEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C618892DA51286CD5B61349B /* EventEditorView.swift */; };
+		22788BB273CCB0149DE7F8AC /* BackgroundCustomizerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D26C0D49F41D4F0321BA31 /* BackgroundCustomizerView.swift */; };
+		2294E59B7B0C9871C7F09EFE /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E934C43D962B882100EA77 /* SettingsView.swift */; };
+		23532FF8A22BEF6E15D2F4D3 /* FlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 553F0A5EDF06E7BAABD5622D /* FlowLayout.swift */; };
+		265ADD9E188D14459FCA0798 /* BackgroundImageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A757C36094E890640645A61E /* BackgroundImageTests.swift */; };
+		34CDF3A61CC098F598D5FCBC /* GlassCountApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90B7452831DBEAD1BAB7F670 /* GlassCountApp.swift */; };
+		37148D6EC8AF45226418DCE9 /* NotificationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B7699ECFAF541086BBEA23 /* NotificationTests.swift */; };
+		390DDE4355ADE5A10F1B5D13 /* MenuBarContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FC091070622CDAC37A32D15 /* MenuBarContent.swift */; };
+		39DDCBEDF77470B4E602A395 /* StatePersistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20ABA25388C7B6DC299CB799 /* StatePersistence.swift */; };
+		43589558AD2979B2BF0B4341 /* ClockObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9411F304541F433BB418EC /* ClockObserver.swift */; };
+		5E9496C1050323CA0413729D /* LaunchOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D18D68297628880914900B /* LaunchOptions.swift */; };
+		61BA6B87BCBA1A34160DB9A8 /* GlassCountWidget.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = F5013A66B8BC31FACC59EF88 /* GlassCountWidget.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		633CF3FC51DF1511D45664B7 /* FeaturedCountdownCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 432A31412FE5F12F75309D87 /* FeaturedCountdownCard.swift */; };
+		63678A24DA824A9E03CCFA03 /* EventStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 280392F59B11674E2B7ED545 /* EventStyle.swift */; };
+		6A8E14B3121AE921E388777B /* BackgroundImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 770A3C85E9739555FB08660F /* BackgroundImageCache.swift */; };
+		7205551D31C069F14FCFA216 /* AppStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBC8FBEE6390D4849B0332F6 /* AppStore.swift */; };
+		7466310DFEB0A3DC9F9B44F5 /* ReminderPlanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 692D45D5047BC3D5C0D5D8FE /* ReminderPlanner.swift */; };
+		78EA6FBFCF0550C397499F32 /* CountdownEngineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD2E30D5B99E827F758139A /* CountdownEngineTests.swift */; };
+		7BBBE8C06486125719D8EF1E /* PersistenceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927185B45113ABB2D91DD4E1 /* PersistenceTests.swift */; };
+		8B8633315E1BFBB0962574DA /* BackgroundViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6EA826C358502D48C16ABD /* BackgroundViews.swift */; };
+		8B8FF5743F865BEBCD815064 /* DesktopWidgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D03045577DA176CA4525BA80 /* DesktopWidgetView.swift */; };
+		8C9791223565F21C30A0B373 /* MenuBarLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4EE6BDF6D557C6FDF1BEE67 /* MenuBarLabel.swift */; };
+		8F7EDA7942DBCECF31547700 /* NotificationScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1026671C0093F6F8E598AC2 /* NotificationScheduler.swift */; };
+		9494195A0F259A13D4EFA681 /* StatePersistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20ABA25388C7B6DC299CB799 /* StatePersistence.swift */; };
+		99A0B7B2E1AC94EE3E3AEEE5 /* CountdownEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = F94A92B1507FD6C81C4A4972 /* CountdownEvent.swift */; };
+		9A1956B8EE8B30D3194C7BDB /* TestSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = F720ABA9AAD75D2DCD9DC03F /* TestSupport.swift */; };
+		9CC2DF1EB5529436D0B66D56 /* GlassCountUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D947685C2BEBF60623980EAC /* GlassCountUITests.swift */; };
+		A2025847DB0C1267350B60B1 /* CountdownEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = F94A92B1507FD6C81C4A4972 /* CountdownEvent.swift */; };
+		AB60D2991FE07890C775633D /* BackgroundImageStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C49297891C3B9A1E2C82D2A9 /* BackgroundImageStore.swift */; };
+		AE910877CF35CB92BFCA65ED /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F023B84F371FB1F415858282 /* Assets.xcassets */; };
+		B900E120C5B548E5E9BE59D9 /* GlassSurface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA3848805318609B23417E9 /* GlassSurface.swift */; };
+		BA92986CE5C24EB6AC277414 /* LiveCountdown.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1951B782C2FBD6756AE76E33 /* LiveCountdown.swift */; };
+		BCC49285FD6011F2A203CCEE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3B8161448C32A3A3FAADEB2 /* AppDelegate.swift */; };
+		C4B1A800641CF062F45DBA9A /* CountdownFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACF49D8251CD43301FCF910 /* CountdownFormatter.swift */; };
+		CC06AADCCC0B7EF6DF18CF65 /* CountdownCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CDCC5FCD3ABE07CABB6D5A6 /* CountdownCard.swift */; };
+		D18F497C3B0E9B62B9EB73AB /* GlassCountWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42E1A3F941BAFF6EDF9582E /* GlassCountWidget.swift */; };
+		E65371F49BC83149BFA42DE4 /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB92FA6525C950D68FB5283D /* AppSettings.swift */; };
+		EBB4DFF5F9431A88DBC9FB3A /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB92FA6525C950D68FB5283D /* AppSettings.swift */; };
+		EF0DDC7EA159A76757EE44DF /* SnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D38C1403F44F08C5D0370E47 /* SnapshotTests.swift */; };
+		FBEB6C611450DEBFDEB20FAA /* AppModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 305F02D4676EA93A7781C091 /* AppModel.swift */; };
+		FD045E192E659CBDDFB963CC /* EventStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 280392F59B11674E2B7ED545 /* EventStyle.swift */; };
+		FE8C7D2C891A0403170BEE16 /* CountdownEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = D92175ACA7E03EB4C635D6CA /* CountdownEngine.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		5FA5AA55D7BDEECBCEF918BB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 66CC20EAA4D9113ADC762826 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 76C72FDAB0E2A842ED23C1E1;
+			remoteInfo = GlassCount;
+		};
+		B163C25DC02B05E7EF502601 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 66CC20EAA4D9113ADC762826 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 76C72FDAB0E2A842ED23C1E1;
+			remoteInfo = GlassCount;
+		};
+		CADB37BD6F694811B9CCDE4F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 66CC20EAA4D9113ADC762826 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 09A7D4E37860D61BD486984D;
+			remoteInfo = GlassCountWidget;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		698263C84F6255D8DBBC3247 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				61BA6B87BCBA1A34160DB9A8 /* GlassCountWidget.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		0CDCC5FCD3ABE07CABB6D5A6 /* CountdownCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountdownCard.swift; sourceTree = "<group>"; };
+		1951B782C2FBD6756AE76E33 /* LiveCountdown.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveCountdown.swift; sourceTree = "<group>"; };
+		1DA3848805318609B23417E9 /* GlassSurface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlassSurface.swift; sourceTree = "<group>"; };
+		20ABA25388C7B6DC299CB799 /* StatePersistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatePersistence.swift; sourceTree = "<group>"; };
+		280392F59B11674E2B7ED545 /* EventStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventStyle.swift; sourceTree = "<group>"; };
+		29D26C0D49F41D4F0321BA31 /* BackgroundCustomizerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundCustomizerView.swift; sourceTree = "<group>"; };
+		305F02D4676EA93A7781C091 /* AppModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppModel.swift; sourceTree = "<group>"; };
+		40ACC7F29206B3E8DCE7BB04 /* GlassCount.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GlassCount.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		432A31412FE5F12F75309D87 /* FeaturedCountdownCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeaturedCountdownCard.swift; sourceTree = "<group>"; };
+		4ACF49D8251CD43301FCF910 /* CountdownFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountdownFormatter.swift; sourceTree = "<group>"; };
+		4FC091070622CDAC37A32D15 /* MenuBarContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarContent.swift; sourceTree = "<group>"; };
+		53B7699ECFAF541086BBEA23 /* NotificationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationTests.swift; sourceTree = "<group>"; };
+		553F0A5EDF06E7BAABD5622D /* FlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowLayout.swift; sourceTree = "<group>"; };
+		5FD2E30D5B99E827F758139A /* CountdownEngineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountdownEngineTests.swift; sourceTree = "<group>"; };
+		6390A5058B3136D9FF49E71E /* GlassCountTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GlassCountTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		692D45D5047BC3D5C0D5D8FE /* ReminderPlanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderPlanner.swift; sourceTree = "<group>"; };
+		770A3C85E9739555FB08660F /* BackgroundImageCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundImageCache.swift; sourceTree = "<group>"; };
+		84D18D68297628880914900B /* LaunchOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchOptions.swift; sourceTree = "<group>"; };
+		87E934C43D962B882100EA77 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		90B7452831DBEAD1BAB7F670 /* GlassCountApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlassCountApp.swift; sourceTree = "<group>"; };
+		927185B45113ABB2D91DD4E1 /* PersistenceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceTests.swift; sourceTree = "<group>"; };
+		A4EE6BDF6D557C6FDF1BEE67 /* MenuBarLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarLabel.swift; sourceTree = "<group>"; };
+		A757C36094E890640645A61E /* BackgroundImageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundImageTests.swift; sourceTree = "<group>"; };
+		AB92FA6525C950D68FB5283D /* AppSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettings.swift; sourceTree = "<group>"; };
+		BA9411F304541F433BB418EC /* ClockObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClockObserver.swift; sourceTree = "<group>"; };
+		C1026671C0093F6F8E598AC2 /* NotificationScheduler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationScheduler.swift; sourceTree = "<group>"; };
+		C42E1A3F941BAFF6EDF9582E /* GlassCountWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlassCountWidget.swift; sourceTree = "<group>"; };
+		C49297891C3B9A1E2C82D2A9 /* BackgroundImageStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundImageStore.swift; sourceTree = "<group>"; };
+		C618892DA51286CD5B61349B /* EventEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventEditorView.swift; sourceTree = "<group>"; };
+		CA6EA826C358502D48C16ABD /* BackgroundViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundViews.swift; sourceTree = "<group>"; };
+		CBC8FBEE6390D4849B0332F6 /* AppStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStore.swift; sourceTree = "<group>"; };
+		D03045577DA176CA4525BA80 /* DesktopWidgetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesktopWidgetView.swift; sourceTree = "<group>"; };
+		D38C1403F44F08C5D0370E47 /* SnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnapshotTests.swift; sourceTree = "<group>"; };
+		D9062274159BE8BD6F60EFF5 /* GlassCountWidget.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = GlassCountWidget.entitlements; sourceTree = "<group>"; };
+		D92175ACA7E03EB4C635D6CA /* CountdownEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountdownEngine.swift; sourceTree = "<group>"; };
+		D947685C2BEBF60623980EAC /* GlassCountUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlassCountUITests.swift; sourceTree = "<group>"; };
+		DA831EFB34754FAF37E32772 /* GlassCountUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GlassCountUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		E3B8161448C32A3A3FAADEB2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		E65E4D68834E4187D7958E8C /* MainWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainWindow.swift; sourceTree = "<group>"; };
+		F023B84F371FB1F415858282 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		F5013A66B8BC31FACC59EF88 /* GlassCountWidget.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = GlassCountWidget.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		F720ABA9AAD75D2DCD9DC03F /* TestSupport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestSupport.swift; sourceTree = "<group>"; };
+		F94A92B1507FD6C81C4A4972 /* CountdownEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountdownEvent.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		0C95C98EBCE10F23040F8984 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				AB92FA6525C950D68FB5283D /* AppSettings.swift */,
+				F94A92B1507FD6C81C4A4972 /* CountdownEvent.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		1555910AAB5D2A7372953BF1 /* MenuBar */ = {
+			isa = PBXGroup;
+			children = (
+				4FC091070622CDAC37A32D15 /* MenuBarContent.swift */,
+				A4EE6BDF6D557C6FDF1BEE67 /* MenuBarLabel.swift */,
+			);
+			path = MenuBar;
+			sourceTree = "<group>";
+		};
+		196B5BCC702C447E2DEDC56F /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				87E934C43D962B882100EA77 /* SettingsView.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		1F28DD10223696EE079386AE /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				865DC518035220CBB924B565 /* GlassCount */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		3CBB3352F365FAAA63B8F99A /* UITests */ = {
+			isa = PBXGroup;
+			children = (
+				D947685C2BEBF60623980EAC /* GlassCountUITests.swift */,
+			);
+			path = UITests;
+			sourceTree = "<group>";
+		};
+		493A01EFF518E4234DF760B5 = {
+			isa = PBXGroup;
+			children = (
+				9EBEB41E2906C7BD74D5F643 /* Resources */,
+				1F28DD10223696EE079386AE /* Sources */,
+				A0ACF3E7BFFD716B03E1394F /* Tests */,
+				3CBB3352F365FAAA63B8F99A /* UITests */,
+				92F959C8628B36198BF1BB7B /* Widget */,
+				F60A5060C5E36455CD33573E /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		4E0156C3AD5A42B9E69910F2 /* GlassCountTests */ = {
+			isa = PBXGroup;
+			children = (
+				A757C36094E890640645A61E /* BackgroundImageTests.swift */,
+				5FD2E30D5B99E827F758139A /* CountdownEngineTests.swift */,
+				53B7699ECFAF541086BBEA23 /* NotificationTests.swift */,
+				927185B45113ABB2D91DD4E1 /* PersistenceTests.swift */,
+				D38C1403F44F08C5D0370E47 /* SnapshotTests.swift */,
+				F720ABA9AAD75D2DCD9DC03F /* TestSupport.swift */,
+			);
+			path = GlassCountTests;
+			sourceTree = "<group>";
+		};
+		5968F682F205CA9A53F36AB8 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				29D26C0D49F41D4F0321BA31 /* BackgroundCustomizerView.swift */,
+				0CDCC5FCD3ABE07CABB6D5A6 /* CountdownCard.swift */,
+				D03045577DA176CA4525BA80 /* DesktopWidgetView.swift */,
+				C618892DA51286CD5B61349B /* EventEditorView.swift */,
+				432A31412FE5F12F75309D87 /* FeaturedCountdownCard.swift */,
+				E65E4D68834E4187D7958E8C /* MainWindow.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		865DC518035220CBB924B565 /* GlassCount */ = {
+			isa = PBXGroup;
+			children = (
+				D2BCE521B447E8F3BBF75A93 /* App */,
+				96DC6F3197C519A882982915 /* Background */,
+				ED52666AEF04144052B26CF4 /* Engine */,
+				1555910AAB5D2A7372953BF1 /* MenuBar */,
+				0C95C98EBCE10F23040F8984 /* Models */,
+				BF4BEE55AA4ADDF284FF210F /* Notifications */,
+				DCFE7CF037F7B15F66D83DA6 /* Persistence */,
+				D222B65044B3B5E115DB0F6D /* UI */,
+			);
+			path = GlassCount;
+			sourceTree = "<group>";
+		};
+		92F959C8628B36198BF1BB7B /* Widget */ = {
+			isa = PBXGroup;
+			children = (
+				D9062274159BE8BD6F60EFF5 /* GlassCountWidget.entitlements */,
+				C42E1A3F941BAFF6EDF9582E /* GlassCountWidget.swift */,
+			);
+			path = Widget;
+			sourceTree = "<group>";
+		};
+		96DC6F3197C519A882982915 /* Background */ = {
+			isa = PBXGroup;
+			children = (
+				770A3C85E9739555FB08660F /* BackgroundImageCache.swift */,
+				C49297891C3B9A1E2C82D2A9 /* BackgroundImageStore.swift */,
+			);
+			path = Background;
+			sourceTree = "<group>";
+		};
+		9EBEB41E2906C7BD74D5F643 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				F023B84F371FB1F415858282 /* Assets.xcassets */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		A0ACF3E7BFFD716B03E1394F /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				4E0156C3AD5A42B9E69910F2 /* GlassCountTests */,
+			);
+			path = Tests;
+			sourceTree = "<group>";
+		};
+		A7297675A317AE1951C72966 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				CA6EA826C358502D48C16ABD /* BackgroundViews.swift */,
+				280392F59B11674E2B7ED545 /* EventStyle.swift */,
+				553F0A5EDF06E7BAABD5622D /* FlowLayout.swift */,
+				1DA3848805318609B23417E9 /* GlassSurface.swift */,
+				1951B782C2FBD6756AE76E33 /* LiveCountdown.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		BF4BEE55AA4ADDF284FF210F /* Notifications */ = {
+			isa = PBXGroup;
+			children = (
+				C1026671C0093F6F8E598AC2 /* NotificationScheduler.swift */,
+				692D45D5047BC3D5C0D5D8FE /* ReminderPlanner.swift */,
+			);
+			path = Notifications;
+			sourceTree = "<group>";
+		};
+		D222B65044B3B5E115DB0F6D /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				A7297675A317AE1951C72966 /* Components */,
+				196B5BCC702C447E2DEDC56F /* Settings */,
+				5968F682F205CA9A53F36AB8 /* Views */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
+		D2BCE521B447E8F3BBF75A93 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				E3B8161448C32A3A3FAADEB2 /* AppDelegate.swift */,
+				305F02D4676EA93A7781C091 /* AppModel.swift */,
+				90B7452831DBEAD1BAB7F670 /* GlassCountApp.swift */,
+				84D18D68297628880914900B /* LaunchOptions.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		DCFE7CF037F7B15F66D83DA6 /* Persistence */ = {
+			isa = PBXGroup;
+			children = (
+				CBC8FBEE6390D4849B0332F6 /* AppStore.swift */,
+				20ABA25388C7B6DC299CB799 /* StatePersistence.swift */,
+			);
+			path = Persistence;
+			sourceTree = "<group>";
+		};
+		ED52666AEF04144052B26CF4 /* Engine */ = {
+			isa = PBXGroup;
+			children = (
+				BA9411F304541F433BB418EC /* ClockObserver.swift */,
+				D92175ACA7E03EB4C635D6CA /* CountdownEngine.swift */,
+				4ACF49D8251CD43301FCF910 /* CountdownFormatter.swift */,
+			);
+			path = Engine;
+			sourceTree = "<group>";
+		};
+		F60A5060C5E36455CD33573E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				40ACC7F29206B3E8DCE7BB04 /* GlassCount.app */,
+				6390A5058B3136D9FF49E71E /* GlassCountTests.xctest */,
+				DA831EFB34754FAF37E32772 /* GlassCountUITests.xctest */,
+				F5013A66B8BC31FACC59EF88 /* GlassCountWidget.appex */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		09A7D4E37860D61BD486984D /* GlassCountWidget */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F15E1BE226778FCD011BFFDF /* Build configuration list for PBXNativeTarget "GlassCountWidget" */;
+			buildPhases = (
+				C90DB022364B44E6A503756C /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = GlassCountWidget;
+			packageProductDependencies = (
+			);
+			productName = GlassCountWidget;
+			productReference = F5013A66B8BC31FACC59EF88 /* GlassCountWidget.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+		76C72FDAB0E2A842ED23C1E1 /* GlassCount */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2E71B677277F6D38496B2347 /* Build configuration list for PBXNativeTarget "GlassCount" */;
+			buildPhases = (
+				B56555F0E9BF5F333EDD7E0F /* Sources */,
+				2DDE28B5C6154C66106506ED /* Resources */,
+				698263C84F6255D8DBBC3247 /* Embed Foundation Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				375AFE6023E18722E40C0D7D /* PBXTargetDependency */,
+			);
+			name = GlassCount;
+			packageProductDependencies = (
+			);
+			productName = GlassCount;
+			productReference = 40ACC7F29206B3E8DCE7BB04 /* GlassCount.app */;
+			productType = "com.apple.product-type.application";
+		};
+		821B48C443295B1ABFCC9A46 /* GlassCountUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E0624295B353DDC46908AF11 /* Build configuration list for PBXNativeTarget "GlassCountUITests" */;
+			buildPhases = (
+				E6C030FFC2422D7C156678A4 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				04E4CA5E48E80A5E05909804 /* PBXTargetDependency */,
+			);
+			name = GlassCountUITests;
+			packageProductDependencies = (
+			);
+			productName = GlassCountUITests;
+			productReference = DA831EFB34754FAF37E32772 /* GlassCountUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+		FF59FF1C957873A647E4E32F /* GlassCountTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9C82CBEBAA803F89FCE0D071 /* Build configuration list for PBXNativeTarget "GlassCountTests" */;
+			buildPhases = (
+				7C3C59E5734B58B2F4AE3AB4 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				A28665C76B326B04313DE5F8 /* PBXTargetDependency */,
+			);
+			name = GlassCountTests;
+			packageProductDependencies = (
+			);
+			productName = GlassCountTests;
+			productReference = 6390A5058B3136D9FF49E71E /* GlassCountTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		66CC20EAA4D9113ADC762826 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+					09A7D4E37860D61BD486984D = {
+						DevelopmentTeam = "";
+						ProvisioningStyle = Manual;
+					};
+					76C72FDAB0E2A842ED23C1E1 = {
+						DevelopmentTeam = "";
+						ProvisioningStyle = Manual;
+					};
+					821B48C443295B1ABFCC9A46 = {
+						DevelopmentTeam = "";
+						ProvisioningStyle = Manual;
+						TestTargetID = 76C72FDAB0E2A842ED23C1E1;
+					};
+					FF59FF1C957873A647E4E32F = {
+						DevelopmentTeam = "";
+						ProvisioningStyle = Manual;
+					};
+				};
+			};
+			buildConfigurationList = 5F910BC97577B7352F7174FB /* Build configuration list for PBXProject "GlassCount" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = 493A01EFF518E4234DF760B5;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = F60A5060C5E36455CD33573E /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				76C72FDAB0E2A842ED23C1E1 /* GlassCount */,
+				09A7D4E37860D61BD486984D /* GlassCountWidget */,
+				FF59FF1C957873A647E4E32F /* GlassCountTests */,
+				821B48C443295B1ABFCC9A46 /* GlassCountUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		2DDE28B5C6154C66106506ED /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AE910877CF35CB92BFCA65ED /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		7C3C59E5734B58B2F4AE3AB4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				265ADD9E188D14459FCA0798 /* BackgroundImageTests.swift in Sources */,
+				78EA6FBFCF0550C397499F32 /* CountdownEngineTests.swift in Sources */,
+				37148D6EC8AF45226418DCE9 /* NotificationTests.swift in Sources */,
+				7BBBE8C06486125719D8EF1E /* PersistenceTests.swift in Sources */,
+				EF0DDC7EA159A76757EE44DF /* SnapshotTests.swift in Sources */,
+				9A1956B8EE8B30D3194C7BDB /* TestSupport.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B56555F0E9BF5F333EDD7E0F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BCC49285FD6011F2A203CCEE /* AppDelegate.swift in Sources */,
+				FBEB6C611450DEBFDEB20FAA /* AppModel.swift in Sources */,
+				E65371F49BC83149BFA42DE4 /* AppSettings.swift in Sources */,
+				7205551D31C069F14FCFA216 /* AppStore.swift in Sources */,
+				22788BB273CCB0149DE7F8AC /* BackgroundCustomizerView.swift in Sources */,
+				6A8E14B3121AE921E388777B /* BackgroundImageCache.swift in Sources */,
+				AB60D2991FE07890C775633D /* BackgroundImageStore.swift in Sources */,
+				8B8633315E1BFBB0962574DA /* BackgroundViews.swift in Sources */,
+				43589558AD2979B2BF0B4341 /* ClockObserver.swift in Sources */,
+				CC06AADCCC0B7EF6DF18CF65 /* CountdownCard.swift in Sources */,
+				FE8C7D2C891A0403170BEE16 /* CountdownEngine.swift in Sources */,
+				99A0B7B2E1AC94EE3E3AEEE5 /* CountdownEvent.swift in Sources */,
+				C4B1A800641CF062F45DBA9A /* CountdownFormatter.swift in Sources */,
+				8B8FF5743F865BEBCD815064 /* DesktopWidgetView.swift in Sources */,
+				18C6EDB294E46AA1929EC691 /* EventEditorView.swift in Sources */,
+				63678A24DA824A9E03CCFA03 /* EventStyle.swift in Sources */,
+				633CF3FC51DF1511D45664B7 /* FeaturedCountdownCard.swift in Sources */,
+				23532FF8A22BEF6E15D2F4D3 /* FlowLayout.swift in Sources */,
+				34CDF3A61CC098F598D5FCBC /* GlassCountApp.swift in Sources */,
+				B900E120C5B548E5E9BE59D9 /* GlassSurface.swift in Sources */,
+				5E9496C1050323CA0413729D /* LaunchOptions.swift in Sources */,
+				BA92986CE5C24EB6AC277414 /* LiveCountdown.swift in Sources */,
+				0E4314BE2722101B740D3E7C /* MainWindow.swift in Sources */,
+				390DDE4355ADE5A10F1B5D13 /* MenuBarContent.swift in Sources */,
+				8C9791223565F21C30A0B373 /* MenuBarLabel.swift in Sources */,
+				8F7EDA7942DBCECF31547700 /* NotificationScheduler.swift in Sources */,
+				7466310DFEB0A3DC9F9B44F5 /* ReminderPlanner.swift in Sources */,
+				2294E59B7B0C9871C7F09EFE /* SettingsView.swift in Sources */,
+				39DDCBEDF77470B4E602A395 /* StatePersistence.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C90DB022364B44E6A503756C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EBB4DFF5F9431A88DBC9FB3A /* AppSettings.swift in Sources */,
+				013032ED1C9EA7D2C9539CD3 /* CountdownEngine.swift in Sources */,
+				A2025847DB0C1267350B60B1 /* CountdownEvent.swift in Sources */,
+				FD045E192E659CBDDFB963CC /* EventStyle.swift in Sources */,
+				D18F497C3B0E9B62B9EB73AB /* GlassCountWidget.swift in Sources */,
+				9494195A0F259A13D4EFA681 /* StatePersistence.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E6C030FFC2422D7C156678A4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9CC2DF1EB5529436D0B66D56 /* GlassCountUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		04E4CA5E48E80A5E05909804 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 76C72FDAB0E2A842ED23C1E1 /* GlassCount */;
+			targetProxy = 5FA5AA55D7BDEECBCEF918BB /* PBXContainerItemProxy */;
+		};
+		375AFE6023E18722E40C0D7D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 09A7D4E37860D61BD486984D /* GlassCountWidget */;
+			targetProxy = CADB37BD6F694811B9CCDE4F /* PBXContainerItemProxy */;
+		};
+		A28665C76B326B04313DE5F8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 76C72FDAB0E2A842ED23C1E1 /* GlassCount */;
+			targetProxy = B163C25DC02B05E7EF502601 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		003CC1C39B508692E8563C24 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				COMBINE_HIDPI_IMAGES = YES;
+				ENABLE_APP_SANDBOX = NO;
+				ENABLE_HARDENED_RUNTIME = NO;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = "build/Info-App.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.glasscount.app;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		5E0797D8B4C5021204C6142B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = Widget/GlassCountWidget.entitlements;
+				COMBINE_HIDPI_IMAGES = YES;
+				ENABLE_HARDENED_RUNTIME = NO;
+				INFOPLIST_FILE = "build/Info-Widget.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.glasscount.app.widget;
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		674633284D5C8C5736BB13BE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Manual;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = "";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		93C0E125314CBF31B19A50ED /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.glasscount.app.tests;
+				SDKROOT = macosx;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/GlassCount.app/Contents/MacOS/GlassCount";
+			};
+			name = Release;
+		};
+		A3008EE5DA0F3A6DC798E087 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.glasscount.app.uitests;
+				SDKROOT = macosx;
+				TEST_TARGET_NAME = GlassCount;
+			};
+			name = Debug;
+		};
+		AF4E2788724C952A8250B1C2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = Widget/GlassCountWidget.entitlements;
+				COMBINE_HIDPI_IMAGES = YES;
+				ENABLE_HARDENED_RUNTIME = NO;
+				INFOPLIST_FILE = "build/Info-Widget.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.glasscount.app.widget;
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+		C79681556C9C49298CF7B659 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.glasscount.app.uitests;
+				SDKROOT = macosx;
+				TEST_TARGET_NAME = GlassCount;
+			};
+			name = Release;
+		};
+		CC8C8D4B728B573C8872F1FA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				COMBINE_HIDPI_IMAGES = YES;
+				ENABLE_APP_SANDBOX = NO;
+				ENABLE_HARDENED_RUNTIME = NO;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = "build/Info-App.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.glasscount.app;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		D60BB8B2CBC632CAF5833FEF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.glasscount.app.tests;
+				SDKROOT = macosx;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/GlassCount.app/Contents/MacOS/GlassCount";
+			};
+			name = Debug;
+		};
+		FC8669C2B73A4F65C9434E56 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Manual;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		2E71B677277F6D38496B2347 /* Build configuration list for PBXNativeTarget "GlassCount" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				003CC1C39B508692E8563C24 /* Debug */,
+				CC8C8D4B728B573C8872F1FA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		5F910BC97577B7352F7174FB /* Build configuration list for PBXProject "GlassCount" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FC8669C2B73A4F65C9434E56 /* Debug */,
+				674633284D5C8C5736BB13BE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		9C82CBEBAA803F89FCE0D071 /* Build configuration list for PBXNativeTarget "GlassCountTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D60BB8B2CBC632CAF5833FEF /* Debug */,
+				93C0E125314CBF31B19A50ED /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		E0624295B353DDC46908AF11 /* Build configuration list for PBXNativeTarget "GlassCountUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A3008EE5DA0F3A6DC798E087 /* Debug */,
+				C79681556C9C49298CF7B659 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		F15E1BE226778FCD011BFFDF /* Build configuration list for PBXNativeTarget "GlassCountWidget" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5E0797D8B4C5021204C6142B /* Debug */,
+				AF4E2788724C952A8250B1C2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 66CC20EAA4D9113ADC762826 /* Project object */;
+}
